@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "362998596846",
+    "project_id": "izipush",
+    "storage_bucket": "izipush.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362998596846:android:6f5e8388efd465a3401fff",
+        "android_client_info": {
+          "package_name": "s.yarlykov.izipush"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "362998596846-sfdvnu6ncjb1vebpusv2luuuco77t4ho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFsB8FkAfJUd-RB_1knumc8O56K6OreF0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "362998596846-sfdvnu6ncjb1vebpusv2luuuco77t4ho.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

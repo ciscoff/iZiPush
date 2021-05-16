@@ -1,6 +1,7 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
+    //id 'com.google.gms.google-services'
 }
 
 android {
@@ -8,13 +9,13 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "s.yarlykov.izipush"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -34,7 +35,7 @@ android {
 
 // нужно поместить в app и в lib
 //ext {
-  //  currentFirebaseVersion = "22.0.0"
+ //   currentFirebaseVersion = "22.0.0"
 //}
 
 dependencies {
@@ -43,32 +44,16 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-
-    // Зависимость от модуля задается через 'implementation project'
-    // https://docs.gradle.org/current/userguide/dependency_management.html#sub:project_dependencie
-    implementation project(":PushSdk")
-
-    // https://stackoverflow.com/questions/38596093/implement-firebase-inside-of-a-library
-    // А вот так задается зависимость, живущая в репозитории
-    //implementation("s.yarlykov.pushsdk:PushSdk:1.0@aar") {
-        //transitive = true
-        //exclude group: 'com.google.firebase'
-    //}
-
-    implementation("com.google.firebase:firebase-messaging:$currentFirebaseVersion") {
-        // Exclude the "plain java" json module to fix build warnings.
-        exclude group: 'org.json', module: 'json'
-    }
 
 //    implementation platform('com.google.firebase:firebase-bom:28.0.1')
 //    implementation 'com.google.firebase:firebase-messaging-ktx'
 //    implementation 'com.google.firebase:firebase-analytics-ktx'
 
+    compileOnly("com.google.firebase:firebase-messaging:$currentFirebaseVersion") {
+        exclude group: 'org.json', module: 'json'
+    }
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
-
-// Needs to be at the bottom of file.
-apply plugin: 'com.google.gms.google-services'
