@@ -51,10 +51,10 @@ dependencies {
 
     // https://stackoverflow.com/questions/38596093/implement-firebase-inside-of-a-library
     // А вот так задается зависимость, живущая в репозитории
-    //implementation("s.yarlykov.pushsdk:PushSdk:1.0@aar") {
-        //transitive = true
-        //exclude group: 'com.google.firebase'
-    //}
+//    implementation("s.yarlykov.pushsdk:PushSdk:1.0@aar") {
+//        transitive = true
+//        exclude group: 'com.google.firebase'
+//    }
 
     implementation("com.google.firebase:firebase-messaging:$currentFirebaseVersion") {
         // Exclude the "plain java" json module to fix build warnings.
