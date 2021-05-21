@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -16,21 +18,62 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-
 @ExperimentalCoroutinesApi
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var fab: FloatingActionButton
+    private lateinit var fabEx: ExtendedFloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val tv : TextView = TextView(this)
-        tv.animation.reset()
+        fab = findViewById(R.id.fab)
+        fabEx = findViewById(R.id.fabEx)
 
         lifecycleScope.launch {
             logIt("FCM token: ${fetchToken()}")
             logIt("App ID: ${fetchApiId()}")
         }
+
+        rotateFab()
+
+        fabEx.iconPadding = 0
+        fabEx.shrink()
+        rotateFabEx()
+    }
+
+    private fun rotateFabEx() {
+
+        fabEx.animation?.apply {
+            cancel()
+            reset()
+        }
+
+        fabEx.rotation = 0f
+
+        fabEx.animate()
+            .rotation(360f)
+            .setDuration(240)
+            .withEndAction(::rotateFabEx)
+            .start()
+    }
+
+    private fun rotateFab() {
+
+        fab.animation?.apply {
+            cancel()
+            reset()
+        }
+
+        fab.rotation = 0f
+
+        fab.animate()
+            .rotation(360f)
+            .setDuration(240)
+            .withEndAction(::rotateFab)
+            .start()
+
     }
 
     private suspend fun fetchApiId(): String = suspendCoroutine { cont ->
