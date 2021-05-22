@@ -37,7 +37,7 @@
         android:gravity="center"
         android:text="send"
         android:elevation="0dp"
-        app:icon="@drawable/ic_motion"
+        app:icon="@drawable/ic_send"
         app:iconGravity="textEnd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

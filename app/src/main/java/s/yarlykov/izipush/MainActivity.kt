@@ -11,6 +11,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import s.yarlykov.pushsdk.utils.logIt
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var fab: FloatingActionButton
     private lateinit var fabEx: ExtendedFloatingActionButton
+    private lateinit var animator: FabAnimationHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,16 +33,21 @@ class MainActivity : AppCompatActivity() {
         fab = findViewById(R.id.fab)
         fabEx = findViewById(R.id.fabEx)
 
+        animator = FabAnimationHelper(fabEx, R.drawable.ic_send, R.drawable.ic_motion)
+
         lifecycleScope.launch {
             logIt("FCM token: ${fetchToken()}")
             logIt("App ID: ${fetchApiId()}")
         }
-
         rotateFab()
 
-        fabEx.iconPadding = 0
-        fabEx.shrink()
-        rotateFabEx()
+        fabEx.setOnClickListener {
+            lifecycleScope.launch {
+                animator.shrinkAndRotate()
+                delay(5000)
+                animator.cancel()
+            }
+        }
     }
 
     private fun rotateFabEx() {
