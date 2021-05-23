@@ -14,6 +14,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
+import s.yarlykov.pushsdk.PushSdk
 import s.yarlykov.pushsdk.utils.logIt
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -25,6 +26,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fab: FloatingActionButton
     private lateinit var fabEx: ExtendedFloatingActionButton
     private lateinit var animator: FabAnimationHelper
+
+    private val pushSdk = PushSdk.create(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
