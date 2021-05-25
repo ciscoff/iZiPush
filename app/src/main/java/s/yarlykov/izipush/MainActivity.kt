@@ -47,43 +47,28 @@ class MainActivity : AppCompatActivity() {
         fabEx.setOnClickListener {
             lifecycleScope.launch {
                 animator.shrinkAndRotate()
-                delay(5000)
-                animator.cancel()
+//                delay(5000)
+//                animator.cancelImmediately()
             }
         }
-    }
 
-    private fun rotateFabEx() {
-
-        fabEx.animation?.apply {
-            cancel()
-            reset()
+        fab.setOnClickListener {
+            animator.cancelImmediately()
         }
-
-        fabEx.rotation = 0f
-
-        fabEx.animate()
-            .rotation(360f)
-            .setDuration(240)
-            .withEndAction(::rotateFabEx)
-            .start()
     }
 
     private fun rotateFab() {
-
         fab.animation?.apply {
             cancel()
             reset()
         }
 
         fab.rotation = 0f
-
         fab.animate()
             .rotation(360f)
             .setDuration(240)
             .withEndAction(::rotateFab)
             .start()
-
     }
 
     private suspend fun fetchApiId(): String = suspendCoroutine { cont ->

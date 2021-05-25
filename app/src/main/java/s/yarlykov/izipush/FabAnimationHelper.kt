@@ -1,6 +1,8 @@
 package s.yarlykov.izipush
 
 import android.view.Gravity
+import android.view.ViewPropertyAnimator
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.annotation.DrawableRes
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import s.yarlykov.pushsdk.utils.dpToInt
@@ -12,8 +14,13 @@ class FabAnimationHelper(
 ) {
 
     companion object {
-        const val ICON_PADDING = 16f
+        private const val ICON_PADDING = 16f
+        private const val MULTIPLIER = 5
+        private const val DURATION = 240L * MULTIPLIER
+        private const val ANGLE = 360f * MULTIPLIER
     }
+
+    lateinit var animator: ViewPropertyAnimator
 
     private var isContinue = false
 
@@ -47,6 +54,12 @@ class FabAnimationHelper(
         isContinue = false
     }
 
+    fun cancelImmediately() {
+        isContinue = false
+        resetAnimation()
+        restore()
+    }
+
     /**
      * Остановить анимацию прогресса и вернуться в состояние Extended
      */
@@ -57,22 +70,21 @@ class FabAnimationHelper(
     private fun rotateShrunken() {
         resetAnimation()
 
-        if(isContinue) {
-            fab.animate()
-                .rotation(360f)
-                .setDuration(240)
+        if (isContinue) {
+            animator = fab.animate()
+                .rotation(ANGLE)
+                .setDuration(DURATION)
+                .setInterpolator(AccelerateDecelerateInterpolator())
                 .withEndAction(::rotateShrunken)
-                .start()
         } else {
             restore()
         }
     }
 
     private fun resetAnimation() {
-        fab.animation?.apply{
-            cancel()
-            reset()
+        if (::animator.isInitialized) {
+            animator.cancel()
+            fab.rotation = 0f
         }
-        fab.rotation = 0f
     }
 }
